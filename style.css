@@ -1,0 +1,13 @@
+body{
+    background-color:aliceblue;  
+    font-family: "Ubuntu";
+}
+p{
+    font-family: "Open Sans";
+}
+nav{
+    background-color: #300F77;
+}
+.nav-link{
+    color: #85B8FF;
+}
