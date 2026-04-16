@@ -127,6 +127,21 @@ function App() {
   const tableName = "Trainees";
   const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
+  async function fetchPlaces() {
+    try {
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${personalAccessToken}` },
+      });
+      const data = await response.json();
+
+      // CRITICAL: Stores the Data and sends it out
+      allRecords = data.records;
+
+      displayPlaces(allRecords);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
   return (
     <div className="row g-4 justify-content-center">
       <div className="col-md-4">
