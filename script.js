@@ -185,7 +185,7 @@ function App() {
               status={f[FIELDS.STATUS] || "Exploring Tech"}
               contactText="View Projects"
               // for Serious Photo
-              avatarUrl={f[FIELDS.PHOTO_SERIOUS] ? f[FIELDS.PHOTO_SERIOUS][0].url : "https://i.pravatar.cc/300"}
+              avatarUrl={f[FIELDS.PHOTO_SERIOUS] ? f[FIELDS.PHOTO_SERIOUS][0].url : "https://via.placeholder.com/300?text=No+Photo"}
             />
           </div>
         );
