@@ -109,7 +109,7 @@ return (
     <div ref={shellRef} className="pc-card-shell">
       <section className="pc-card">
         <div className="pc-inside">
-          {/* NEW: Background Image Container */}
+          {/* Background Image Container */}
           <div className="pc-bg-image-container">
             <img className="pc-card-bg" src={avatarUrl} alt={name} />
           </div>
