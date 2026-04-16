@@ -3,7 +3,27 @@ const { useState, useEffect, useRef, useCallback, useMemo } = React;
 const clamp = (v, min = 0, max = 100) => Math.min(Math.max(v, min), max);
 const round = (v, precision = 3) => parseFloat(v.toFixed(precision));
 
-// --- Profile Card Component ---
+// --- 1. FIELD ID CONSTANTS ---
+// This keeps the code clean and easy to read DONT DELETE !!!
+const FIELDS = {
+  NAME: "fld06doY1XxTCDMmR",
+  LINKEDIN: "fldWlo5wuvNv5J0lG",
+  GITHUB: "fldPqcWtwa9DghlIp",
+  ABOUT_ME_PAGE: "flaltulgqpuM8eUVZ",
+  LYRICS: "flde0EgDDoC6GfcLn",
+  HOBBIES: "fldyK3zVOFSug2hne",
+  ABOUT_ME_TEXT: "fldeZyTeTE9u8DfGM",
+  DREAM_JOB: "fldl9ieMG80PVN6kc",
+  FAV_TECH: "fldET8nxbx8pljtlm",
+  PHOTO_SERIOUS: "fldtJw6nMs2ZhJRed",
+  PHOTO_FUNNY: "fldAXYRM90vSQ9oKj",
+  RECORD_ID: "fldzjeyk9nLfxeEF1",
+  STATUS: "fldZAwfi0D3Zl4I1E",
+  WEB_APP: "fldzC67iMUT8MFw7h",
+  IOT: "flaZridyjhTryRcsG"
+};
+
+// --- 2. Profile Card Component ---
 const ProfileCard = ({
   name,
   title,
@@ -70,6 +90,7 @@ const ProfileCard = ({
 
   useEffect(() => {
     const shell = shellRef.current;
+    if (!shell) return;
     const onMove = (e) => {
       const rect = shell.getBoundingClientRect();
       tiltEngine.setTarget(e.clientX - rect.left, e.clientY - rect.top);
@@ -82,89 +103,102 @@ const ProfileCard = ({
     };
   }, [tiltEngine]);
 
-  return (
-    //Change Color
-    <div ref={wrapRef} className="pc-card-wrapper active">
-      <div className="pc-behind" />
-      <div ref={shellRef} className="pc-card-shell">
-        <section className="pc-card">
-          <div
-            className="pc-inside"
-            style={{
-              background: "linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)",
-            }}
-          >
-            <div className="pc-shine" />
-            <div className="pc-glare" />
-            <div className="pc-content pc-avatar-content">
-              <img className="avatar" src={avatarUrl} alt="avatar" />
-              <div className="pc-user-info">
-                <div className="pc-user-text">
-                  <div className="pc-handle">@{handle}</div>
-                  <div className="pc-status">{status}</div>
-                </div>
-                <button className="pc-contact-btn">{contactText}</button>
+return (
+  <div ref={wrapRef} className="pc-card-wrapper active">
+    <div className="pc-behind" />
+    <div ref={shellRef} className="pc-card-shell">
+      <section className="pc-card">
+        <div className="pc-inside">
+          {/* Background Image Container */}
+          <div className="pc-bg-image-container">
+            <img className="pc-card-bg" src={avatarUrl} alt={name} />
+          </div>
+
+          <div className="pc-shine" />
+          <div className="pc-glare" />
+          
+          <div className="pc-content pc-avatar-content">
+            <div className="pc-user-info">
+              <div className="pc-user-text">
+                <div className="pc-handle">@{handle}</div>
+                <div className="pc-status">{status}</div>
               </div>
-            </div>
-            <div className="pc-content">
-              <div className="pc-details">
-                <h3>{name}</h3>
-                <p>{title}</p>
-              </div>
+              <button className="pc-contact-btn">{contactText}</button>
             </div>
           </div>
-        </section>
-      </div>
+
+          <div className="pc-content">
+            <div className="pc-details">
+              <h3>{name}</h3>
+              <p>{title}</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  </div>
+);
 };
 
-// --- Main Application ---
+// --- 3. Main Application ---
 function App() {
-  const personalAccessToken =
-    "patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a";
+  const [trainees, setTrainees] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Constants
+  const personalAccessToken = "patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a"; 
   const baseId = "app3knV6H85zkGHHn";
   const tableName = "Trainees";
-  const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+  
+  // Adding the 'returnFieldsByFieldId' basically makes field ID's function
+  const url = `https://api.airtable.com/v0/${baseId}/${tableName}?returnFieldsByFieldId=true`;
 
-  async function fetchPlaces() {
-    try {
-      const response = await fetch(url, {
-        headers: { Authorization: `Bearer ${personalAccessToken}` },
-      });
-      const data = await response.json();
-
-      // CRITICAL: Stores the Data and sends it out
-      allRecords = data.records;
-
-      displayPlaces(allRecords);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  useEffect(() => {
+    async function fetchPlaces() {
+      try {
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${personalAccessToken}` },
+        });
+        const data = await response.json();
+        setTrainees(data.records);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
     }
-  }
+    fetchPlaces();
+  }, []);
+
+  if (loading) return <div className="loading" style={{color: "white", textAlign: "center", padding: "50px"}}>Loading Directory...</div>;
+
   return (
     <div className="row g-4 justify-content-center">
-      <div className="col-md-4">
-        <ProfileCard //CHANGE THIS
-          name="First Last Name"
-          title="Dream Position"
-          handle="Github/LinkedIn"
-          status="Hobbies"
-          contactText="See More"
-          avatarUrl="https://i.pravatar.cc/300"
-        />
-      </div>
+      {trainees.map((record) => {
+        const f = record.fields;
+        return (
+          <div className="col-md-4" key={record.id}>
+            <ProfileCard 
+              name={f[FIELDS.NAME] || "Anonymous"} 
+              title={f[FIELDS.DREAM_JOB] || "Trainee"}
+              handle={f[FIELDS.GITHUB] || "N/A"}
+              status={f[FIELDS.STATUS] || "Exploring Tech"}
+              contactText="View Projects"
+              // for Serious Photo
+              avatarUrl={f[FIELDS.PHOTO_SERIOUS] ? f[FIELDS.PHOTO_SERIOUS][0].url : "https://via.placeholder.com/300?text=No+Photo"}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-// --- To HTML ---
+// --- 4. Render to HTML ---
 const container = document.getElementById("student-directory");
 if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(<App />);
 }
 
-//-- Calling functions --
-const root = ReactDOM.createRoot(container);
-root.render(<App />);
+// --- CHANGES MADE BY ---->  !!!DANIEL!!! <--- IF ANY QUESTIONS ASK ME --- 
