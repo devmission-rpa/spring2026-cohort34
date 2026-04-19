@@ -48,3 +48,14 @@ const GlassIcons = ({ items, className }) => {
     </div>
   );
 };
+
+if (loading) {
+  return (
+    <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: "50vh", color: "white" }}>
+      <div className="spinner-border text-info mb-3" role="status" style={{ width: "3rem", height: "3rem" }}>
+        <span className="visually-hidden">Loading...</span>
+      </div>
+      <h4 style={{ fontFamily: "Ubuntu", letterSpacing: "1px" }}>Connecting to Cohort #34...</h4>
+    </div>
+  );
+}

@@ -1,10 +1,9 @@
-const { useState, useEffect, useRef, useCallback, useMemo } = React;
+const { useState, useEffect, useRef, useMemo } = React;
 //https://reactbits.dev/components/profile-card?enableMobileTilt=true
 const clamp = (v, min = 0, max = 100) => Math.min(Math.max(v, min), max);
 const round = (v, precision = 3) => parseFloat(v.toFixed(precision));
 
 // --- 1. FIELD ID CONSTANTS ---
-// This keeps the code clean and easy to read DONT DELETE !!!
 const FIELDS = {
   NAME: "fld06doY1XxTCDMmR",
   LINKEDIN: "fldWlo5wuvNv5J0lG",
@@ -24,67 +23,42 @@ const FIELDS = {
 };
 
 // --- 2. Profile Card Component ---
-const ProfileCard = ({
-  name,
-  title,
-  handle,
-  avatarUrl,
-  status,
-  contactText,
-}) => {
+const ProfileCard = ({ name, title, handle, avatarUrl, status, contactText }) => {
   const wrapRef = useRef(null);
   const shellRef = useRef(null);
 
   const tiltEngine = useMemo(() => {
-    let rafId = null,
-      running = false,
-      currentX = 0,
-      currentY = 0,
-      targetX = 0,
-      targetY = 0;
+    let rafId = null, running = false, currentX = 0, currentY = 0, targetX = 0, targetY = 0;
+
     const setVars = (x, y) => {
       if (!shellRef.current || !wrapRef.current) return;
       const width = shellRef.current.clientWidth || 1;
       const height = shellRef.current.clientHeight || 1;
       const px = clamp((100 / width) * x);
       const py = clamp((100 / height) * y);
+
       wrapRef.current.style.setProperty("--pointer-x", `${px}%`);
       wrapRef.current.style.setProperty("--pointer-y", `${py}%`);
-      wrapRef.current.style.setProperty(
-        "--rotate-x",
-        `${round(-(px - 50) / 5)}deg`,
-      );
-      wrapRef.current.style.setProperty(
-        "--rotate-y",
-        `${round((py - 50) / 4)}deg`,
-      );
+      wrapRef.current.style.setProperty("--rotate-x", `${round(-(px - 50) / 5)}deg`);
+      wrapRef.current.style.setProperty("--rotate-y", `${round((py - 50) / 4)}deg`);
     };
+
     const step = () => {
       currentX += (targetX - currentX) * 0.14;
       currentY += (targetY - currentY) * 0.14;
       setVars(currentX, currentY);
       rafId = requestAnimationFrame(step);
     };
+
     return {
       setTarget(x, y) {
-        targetX = x;
-        targetY = y;
-        if (!running) {
-          running = true;
-          step();
-        }
+        targetX = x; targetY = y;
+        if (!running) { running = true; step(); }
       },
       toCenter() {
-        if (shellRef.current)
-          this.setTarget(
-            shellRef.current.clientWidth / 2,
-            shellRef.current.clientHeight / 2,
-          );
+        if (shellRef.current) this.setTarget(shellRef.current.clientWidth / 2, shellRef.current.clientHeight / 2);
       },
-      cancel() {
-        cancelAnimationFrame(rafId);
-        running = false;
-      },
+      cancel() { cancelAnimationFrame(rafId); running = false; }
     };
   }, []);
 
@@ -103,41 +77,37 @@ const ProfileCard = ({
     };
   }, [tiltEngine]);
 
-return (
-  <div ref={wrapRef} className="pc-card-wrapper active">
-    <div className="pc-behind" />
-    <div ref={shellRef} className="pc-card-shell">
-      <section className="pc-card">
-        <div className="pc-inside">
-          {/* Background Image Container */}
-          <div className="pc-bg-image-container">
-            <img className="pc-card-bg" src={avatarUrl} alt={name} />
-          </div>
-
-          <div className="pc-shine" />
-          <div className="pc-glare" />
-          
-          <div className="pc-content pc-avatar-content">
-            <div className="pc-user-info">
-              <div className="pc-user-text">
-                <div className="pc-handle">@{handle}</div>
-                <div className="pc-status">{status}</div>
+  return (
+    <div ref={wrapRef} className="pc-card-wrapper active">
+      <div className="pc-behind" />
+      <div ref={shellRef} className="pc-card-shell">
+        <section className="pc-card">
+          <div className="pc-inside">
+            <div className="pc-bg-image-container">
+              <img className="pc-card-bg" src={avatarUrl} alt={name} />
+            </div>
+            <div className="pc-shine" />
+            <div className="pc-glare" />
+            <div className="pc-content pc-avatar-content">
+              <div className="pc-user-info">
+                <div className="pc-user-text">
+                  <div className="pc-handle">@{handle}</div>
+                  <div className="pc-status">{status}</div>
+                </div>
+                <button className="pc-contact-btn">{contactText}</button>
               </div>
-              <button className="pc-contact-btn">{contactText}</button>
+            </div>
+            <div className="pc-content">
+              <div className="pc-details">
+                <h3>{name}</h3>
+                <p>{title}</p>
+              </div>
             </div>
           </div>
-
-          <div className="pc-content">
-            <div className="pc-details">
-              <h3>{name}</h3>
-              <p>{title}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 // --- 3. Main Application ---
@@ -145,29 +115,26 @@ function App() {
   const [trainees, setTrainees] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Constants
-  const personalAccessToken = "patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a"; 
+  const personalAccessToken = "patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a";
   const baseId = "app3knV6H85zkGHHn";
   const tableName = "Trainees";
-  
-  // Adding the 'returnFieldsByFieldId' basically makes field ID's function
   const url = `https://api.airtable.com/v0/${baseId}/${tableName}?returnFieldsByFieldId=true`;
 
   useEffect(() => {
-    async function fetchPlaces() {
+    async function fetchTrainees() {
       try {
         const response = await fetch(url, {
           headers: { Authorization: `Bearer ${personalAccessToken}` },
         });
         const data = await response.json();
         setTrainees(data.records);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
         setLoading(false);
       }
     }
-    fetchPlaces();
+    fetchTrainees();
   }, []);
 
   if (loading) return <div className="loading" style={{color: "white", textAlign: "center", padding: "50px"}}>Loading Directory...</div>;
@@ -184,7 +151,6 @@ function App() {
               handle={f[FIELDS.GITHUB] || "N/A"}
               status={f[FIELDS.STATUS] || "Exploring Tech"}
               contactText="View Projects"
-              // for Serious Photo
               avatarUrl={f[FIELDS.PHOTO_SERIOUS] ? f[FIELDS.PHOTO_SERIOUS][0].url : "https://via.placeholder.com/300?text=No+Photo"}
             />
           </div>
@@ -197,8 +163,7 @@ function App() {
 // --- 4. Render to HTML ---
 const container = document.getElementById("student-directory");
 if (container) {
-  const root = ReactDOM.createRoot(container);
-  root.render(<App />);
+  ReactDOM.createRoot(container).render(<App />);
 }
 
 // --- CHANGES MADE BY ---->  !!!DANIEL!!! <--- IF ANY QUESTIONS ASK ME --- 
