@@ -126,5 +126,23 @@ nav {
     z-index: 2;
 }
 
-
 /* --- CHANGES MADE BY ---->  !!!DANIEL!!! <--- IF ANY QUESTIONS ASK ME --- */
+
+
+/* charlotte addition */
+.scrolling-background {
+    height: 100vh;
+    background-image: url('practice-background.jpg'); /* background pic needed */
+    background-size: cover;
+    background-repeat: repeat-y;
+    animation: scroll-vertical 60s linear infinite;
+}
+
+@keyframes scroll-vertical {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 -100%;
+    }
+}
