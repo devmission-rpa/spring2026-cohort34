@@ -69,9 +69,55 @@
     </div>
 </div>
 
-    <!-- Full screen modal/For on click for ProfileCard -->
-<div class="modal-dialog modal-fullscreen-sm-down">
-  ...
+<!-- Full screen modal/For on click for ProfileCard -->
+<div id="detail-view" class="modal">
+    <div class="modal-content">
+    <span class="close-x" onclick="closeDetail()">&times;</span>
+    <div class="modal-layout">
+        <div class="profile-col">
+        <div id="modal-img" class="main-photo"></div>
+        <div class="social-icons">
+            <a id="link-linkedin" target="_blank" class="icon-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+            </a>
+        <a id="link-github" target="_blank" class="icon-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub">
+        </a>
+        </div>
+    <button class="ps4-btn-action">Add Friend</button>
+        </div>
+    <div class="info-col">
+        <h1 id="modal-name">Name</h1>
+        <p id="modal-dream" class="subtitle">Dream Job</p>
+    <div class="info-grid">
+    <div class="info-box"><label>FAVORITE TECH</label><span id="f-tech">---</span></div>
+    <div class="info-box"><label>HOBBIES</label><span id="f-hobbies">---</span></div>
+    <div class="info-box" style="grid-column: span 2;"><label>ABOUT ME</label><span id="f-about">---</span></div>
+</div>
+<div class="projects-section">
+<label class="section-label">MY PROJECTS</label>
+<div class="projects-container">
+
+<a id="link-aboutme" target="_blank" class="project-btn">
+<div class="btn-img" id="img-aboutme"></div>
+<span>About Me Page</span></a>
+
+<a id="link-lyrics" target="_blank" class="project-btn">
+<div class="btn-img" id="img-lyrics"></div>
+<span>Lyrics Poem</span></a>
+
+<a id="link-webapp" target="_blank" class="project-btn">
+<div class="btn-img" id="img-webapp"></div>
+<span>Web App</span></a>
+
+<a id="link-iot" target="_blank" class="project-btn">
+<div class="btn-img" id="img-iot"></div>
+<span>IoT Project</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <!--JavaScript Bootstrap-->

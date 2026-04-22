@@ -86,3 +86,61 @@ const traineeCard = `
     // Run
     getAllRecords();
 });
+
+/* --- DETAIL VIEW LOGIC BY JOSELITO --- */
+/* This code connects my modal with Airtable data and handles the UI */
+// Airtable Configuration
+const apiToken =
+"patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a";
+const baseId = "app3knV6H85zkGHHn";
+const tableId = "tbl9Be29w4DKiBivO";
+// Field IDs from the documentation
+const fields = {
+name: "fld06doY1XxTCDMmR",
+linkedin: "fldWlo5wuvNv5J0lG",
+github: "fldPqcWtwa9DghlIp",
+aboutMePage: "flaltulgqpuM8eUVZ",
+lyrics: "flde0EgDDoC6GfcLn",
+hobbies: "fldyK3zVOFSug2hne",
+aboutBio: "fldeZyTeTE9u8DfGM",
+dreamJob: "fldl9ieMG80PVN6kc",
+favTech: "fldET8nxbx8pljtlm",
+photo2: "fldAXYRM90vSQ9oKj", // Photo 2 (Funny) for Detail View
+webApp: "fldzC67iMUT8MFw7h",
+iot: "flaZridyjhTryRcsG"
+};
+// Function to open and populate the Detail View
+function openDetail(data) {
+// Injecting name and job title
+document.getElementById('modal-name').innerText = data[fields.name] || "---";
+document.getElementById('modal-dream').innerText = data[fields.dreamJob] || "Dream Job";
+// Injecting tech skills and bio
+document.getElementById('f-tech').innerText = data[fields.favTech] || "---";
+document.getElementById('f-hobbies').innerText = data[fields.hobbies] || "---";
+document.getElementById('f-about').innerText = data[fields.aboutBio] || "---";
+// Handling the Profile Picture (Funny Version)
+const funnyImg = data[fields.photo2] ? data[fields.photo2][0].url :
+'https://via.placeholder.com/300x400';
+document.getElementById('modal-img').style.backgroundImage = `url('${funnyImg}')`;
+// Social Media Links
+document.getElementById('link-linkedin').href = data[fields.linkedin] || "#";
+document.getElementById('link-github').href = data[fields.github] || "#";
+// Project Buttons setup
+setupBtn('link-aboutme', 'img-aboutme', data[fields.aboutMePage]);
+setupBtn('link-lyrics', 'img-lyrics', data[fields.lyrics]);
+setupBtn('link-webapp', 'img-webapp', data[fields.webApp]);
+setupBtn('link-iot', 'img-iot', data[fields.iot]);
+// Show the modal
+document.getElementById('detail-view').style.display = 'block';
+}
+// Function to add random preview images to project buttons
+function setupBtn(linkId, imgId, url) {
+const link = document.getElementById(linkId);
+link.href = url || "#";
+document.getElementById(imgId).style.backgroundImage = url ?
+`url('https://picsum.photos/200/100?random=${Math.random()}')` : 'none';
+}
+// Function to close the Detail View
+function closeDetail() {
+document.getElementById('detail-view').style.display = 'none';
+}
