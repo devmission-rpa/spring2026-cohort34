@@ -1,169 +1,88 @@
-const { useState, useEffect, useRef, useMemo } = React;
-//https://reactbits.dev/components/profile-card?enableMobileTilt=true
-const clamp = (v, min = 0, max = 100) => Math.min(Math.max(v, min), max);
-const round = (v, precision = 3) => parseFloat(v.toFixed(precision));
+"use strict"; //Strict Mode
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("student-directory");
 
-// --- 1. FIELD ID CONSTANTS ---
-const FIELDS = {
-  NAME: "fld06doY1XxTCDMmR",
-  LINKEDIN: "fldWlo5wuvNv5J0lG",
-  GITHUB: "fldPqcWtwa9DghlIp",
-  ABOUT_ME_PAGE: "flaltulgqpuM8eUVZ",
-  LYRICS: "flde0EgDDoC6GfcLn",
-  HOBBIES: "fldyK3zVOFSug2hne",
-  ABOUT_ME_TEXT: "fldeZyTeTE9u8DfGM",
-  DREAM_JOB: "fldl9ieMG80PVN6kc",
-  FAV_TECH: "fldET8nxbx8pljtlm",
-  PHOTO_SERIOUS: "fldtJw6nMs2ZhJRed",
-  PHOTO_FUNNY: "fldAXYRM90vSQ9oKj",
-  RECORD_ID: "fldzjeyk9nLfxeEF1",
-  STATUS: "fldZAwfi0D3Zl4I1E",
-  WEB_APP: "fldzC67iMUT8MFw7h",
-  IOT: "flaZridyjhTryRcsG"
-};
+    async function getAllRecords() {
+        const options = {
+            method: "GET",
+            headers: { "Authorization": `Bearer patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a` },
+        };
 
-// --- 2. Profile Card Component ---
-const ProfileCard = ({ name, title, handle, avatarUrl, status, contactText }) => {
-  const wrapRef = useRef(null);
-  const shellRef = useRef(null);
+  try {
+    const response = await fetch(`https://api.airtable.com/v0/app3knV6H85zkGHHn/Trainees?returnFieldsByFieldId=true`, options);
+    const data = await response.json();
 
-  const tiltEngine = useMemo(() => {
-    let rafId = null, running = false, currentX = 0, currentY = 0, targetX = 0, targetY = 0;
+    container.innerHTML = ""; // Clear loader
 
-    const setVars = (x, y) => {
-      if (!shellRef.current || !wrapRef.current) return;
-      const width = shellRef.current.clientWidth || 1;
-      const height = shellRef.current.clientHeight || 1;
-      const px = clamp((100 / width) * x);
-      const py = clamp((100 / height) * y);
+    data.records.forEach(record => {
+      const f = record.fields;
 
-      wrapRef.current.style.setProperty("--pointer-x", `${px}%`);
-      wrapRef.current.style.setProperty("--pointer-y", `${py}%`);
-      wrapRef.current.style.setProperty("--rotate-x", `${round(-(px - 50) / 5)}deg`);
-      wrapRef.current.style.setProperty("--rotate-y", `${round((py - 50) / 4)}deg`);
-    };
+    const frontImg = f["fldtJw6nMs2ZhJRed"]?.[0]?.url || '';
+    const backImg = f["fldAXYRM90vSQ9oKj"]?.[0]?.url || frontImg;
 
-    const step = () => {
-      currentX += (targetX - currentX) * 0.14;
-      currentY += (targetY - currentY) * 0.14;
-      setVars(currentX, currentY);
-      rafId = requestAnimationFrame(step);
-    };
-
-    return {
-      setTarget(x, y) {
-        targetX = x; targetY = y;
-        if (!running) { running = true; step(); }
-      },
-      toCenter() {
-        if (shellRef.current) this.setTarget(shellRef.current.clientWidth / 2, shellRef.current.clientHeight / 2);
-      },
-      cancel() { cancelAnimationFrame(rafId); running = false; }
-    };
-  }, []);
-
-  useEffect(() => {
-    const shell = shellRef.current;
-    if (!shell) return;
-    const onMove = (e) => {
-      const rect = shell.getBoundingClientRect();
-      tiltEngine.setTarget(e.clientX - rect.left, e.clientY - rect.top);
-    };
-    shell.addEventListener("pointermove", onMove);
-    shell.addEventListener("pointerleave", () => tiltEngine.toCenter());
-    return () => {
-      shell.removeEventListener("pointermove", onMove);
-      tiltEngine.cancel();
-    };
-  }, [tiltEngine]);
-
-  return (
-    <div ref={wrapRef} className="pc-card-wrapper active">
-      <div className="pc-behind" />
-      <div ref={shellRef} className="pc-card-shell">
-        <section className="pc-card">
-          <div className="pc-inside">
-            <div className="pc-bg-image-container">
-              <img className="pc-card-bg" src={avatarUrl} alt={name} />
-            </div>
-            <div className="pc-shine" />
-            <div className="pc-glare" />
-            <div className="pc-content pc-avatar-content">
-              <div className="pc-user-info">
-                <div className="pc-user-text">
-                  <div className="pc-handle">@{handle}</div>
-                  <div className="pc-status">{status}</div>
-                </div>
-                <button className="pc-contact-btn">{contactText}</button>
-              </div>
-            </div>
-            <div className="pc-content">
-              <div className="pc-details">
-                <h3>{name}</h3>
-                <p>{title}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+const traineeCard = `
+  <div class="traineeCard card" id="${record.id}" style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
+    <div class="pc-back-image"></div>
+    
+    <div class="pc-header">
+        <h2 class="pc-name">${f["fldO6doY1XxTCDMmR"] || 'Name'}</h2>
+        <p class="pc-title">${f["fldl9ieMG8OPVN6kc"] || 'Dream Job'}</p>
     </div>
-  );
-};
 
-// --- 3. Main Application ---
-function App() {
-  const [trainees, setTrainees] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const personalAccessToken = "patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a";
-  const baseId = "app3knV6H85zkGHHn";
-  const tableName = "Trainees";
-  const url = `https://api.airtable.com/v0/${baseId}/${tableName}?returnFieldsByFieldId=true`;
-
-  useEffect(() => {
-    async function fetchTrainees() {
-      try {
-        const response = await fetch(url, {
-          headers: { Authorization: `Bearer ${personalAccessToken}` },
-        });
-        const data = await response.json();
-        setTrainees(data.records);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
+    <div class="pc-glass-footer">
+        <div class="pc-user-meta">
+            <div class="pc-text">
+                <p class="pc-handle">@${f["fldPqcWtWa9DghlIp"]}</p>
+                <p class="pc-status">${f["fldWlo5wuvNv5JOlG"]}</p>
+            </div>
+        </div>
+        <button class="pc-contact-btn">See More</button>
+    </div>
+  </div>`;
+    container.insertAdjacentHTML("beforeend", traineeCard);
+});
+        } catch (err) {
+            console.error("Fetch error:", err);
+        }
     }
-    fetchTrainees();
-  }, []);
 
-  if (loading) return <div className="loading" style={{color: "white", textAlign: "center", padding: "50px"}}>Loading Directory...</div>;
+    // --- INTERACTION ENGINE ---
+    document.addEventListener("mousemove", (e) => {
+        const card = e.target.closest('.traineeCard.card');
+        if (!card) return;
 
-  return (
-    <div className="row g-4 justify-content-center">
-      {trainees.map((record) => {
-        const f = record.fields;
-        return (
-          <div className="col-md-4" key={record.id}>
-            <ProfileCard 
-              name={f[FIELDS.NAME] || "Anonymous"} 
-              title={f[FIELDS.DREAM_JOB] || "Trainee"}
-              handle={f[FIELDS.GITHUB] || "N/A"}
-              status={f[FIELDS.STATUS] || "Exploring Tech"}
-              contactText="View Projects"
-              avatarUrl={f[FIELDS.PHOTO_SERIOUS] ? f[FIELDS.PHOTO_SERIOUS][0].url : "https://via.placeholder.com/300?text=No+Photo"}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+        const rect = card.getBoundingClientRect();
+        const w = rect.width;
+        const h = rect.height;
+        const l = e.clientX - rect.left;
+        const t = e.clientY - rect.top;
 
-// --- 4. Render to HTML ---
-const container = document.getElementById("student-directory");
-if (container) {
-  ReactDOM.createRoot(container).render(<App />);
-}
+        const px = Math.abs(Math.floor((100 / w) * l) - 100);
+        const py = Math.abs(Math.floor((100 / h) * t) - 100);
+        const pa = (50 - px) + (50 - py);
+        
+        const lp = (50 + (px - 50) / 1.5);
+        const tp = (50 + (py - 50) / 1.5);
+        const ty = ((tp - 50) / 2) * -1;
+        const tx = ((lp - 50) / 1.5) * 0.5;
+        const opc = (20 + Math.abs(pa) * 1.5) / 100;
 
-// --- CHANGES MADE BY ---->  !!!DANIEL!!! <--- IF ANY QUESTIONS ASK ME --- 
+        card.style.setProperty("--ty", `${ty}deg`);
+        card.style.setProperty("--tx", `${tx}deg`);
+        card.style.setProperty("--lp", `${lp}%`);
+        card.style.setProperty("--tp", `${tp}%`);
+        card.style.setProperty("--opc", opc);
+    });
+
+    document.addEventListener("mouseout", (e) => {
+        const card = e.target.closest('.traineeCard.card');
+        if (!card) return;
+
+        card.style.setProperty("--ty", "0deg");
+        card.style.setProperty("--tx", "0deg");
+        card.style.setProperty("--opc", "0");
+    });
+
+    // Run
+    getAllRecords();
+});
