@@ -36,7 +36,7 @@ const traineeCard = `
                 <p class="pc-status">${f["fldWlo5wuvNv5JOlG"]}</p>
             </div>
         </div>
-        <button class="pc-contact-btn">See More</button>
+       <button class="pc-contact-btn" onclick='openDetail(${JSON.stringify(f)})'>See More</button>
     </div>
   </div>`;
     container.insertAdjacentHTML("beforeend", traineeCard);
