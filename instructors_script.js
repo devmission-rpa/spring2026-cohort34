@@ -1,6 +1,5 @@
 "use strict";
 
-
 async function getAllRecords() {
     let getResultElement = document.getElementById("content");
 
@@ -29,23 +28,28 @@ async function getAllRecords() {
             let Description = data.records[i].fields["Description"];
 
             newHtml += `
-
             <div class="col-xl-4 cardImageText">
               <div class="card list move border-dark mb-5" style="width: 20rem;">
-              <a href="instructors.html?id=${data.records[i].id}">${
-                photo
-                  ? `<img class="card-img-top rounded" alt="${name}" src="${photo[0].url}">`
-                  : ``
-              }
-              </a>
-              </div>
+                <a href="instructors.html?id=${data.records[i].id}">
+                  ${
+                    photo
+                      ? `<img class="card-img-top rounded" alt="${name}" src="${photo[0].url}">`
+                      : `<div style="height:200px; background:#eee; display:flex; align-items:center; justify-content:center;">No Photo</div>`
+                  }
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title">${name || 'Instructor Name'}</h5>
+                  <p class="card-text">${Description || ''}</p>
+                </div>
               </div>
             </div>
-
             `;
         }
         getResultElement.innerHTML = newHtml;
     })
+    .catch((err) => {
+        console.error("Fetch error:", err);
+    });
 }
 
-    getAllRecords();
+getAllRecords();
