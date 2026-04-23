@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="styleAnimate.css">
     <link rel="stylesheet" href="style.css">
     <title>Cohort #34 | Class Directory</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <header>
         <nav class="navbar navbar-expand-lg">
@@ -42,7 +46,7 @@
                             <a class="nav-link" href="directory.html">Students</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="instructors js">Instructors</a>
+                            <a class="nav-link" href="instructors.html">Instructors</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="gallery.html">Gallery</a>
@@ -52,34 +56,32 @@
             </div>
         </nav>
     </header>
-<body class="scrolling-background-gallery">
-    <main class="container my-5">
-    <h2 class="text-center mb-4" style="color: #300F77; font-family: 'Ubuntu';">Cohort Gallery</h2>
+<body class="scrolling-background-instructors" >
 
-    <div id="galleryCarousel" class="carousel slide shadow-lg rounded overflow-hidden mb-5" data-bs-ride="carousel">
-        <div class="carousel-inner" id="carousel-content">
-            <div class="carousel-item active">
-                <div class="d-flex align-items-center justify-content-center bg-dark" style="height: 450px;">
-                    <p class="text-white">Loading Gallery...</p>
-                </div>
-            </div>
+<!--links instructor photos-->
+     <div class="container-fluid tables">
+            <div class="row g-3" id="content"></div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
-    </div>
-
-    <h3 class="mb-4" style="font-family: 'Ubuntu';">More Photos</h3>
-    <div class="row g-4" id="grid-content">
-        </div>
-</main>
-
-<script src="galleryscript.js" defer></script>
-<!--ADD Image Background + Card for Images  -->
     
+<div class="container my-5">
+    <!--ID use for Profile Cards-->
+    <div id="student-directory" class="mb-4"> 
+
+    </div>
+</div>
+
+<div class="container my-5">
+    <!--ID use for Profile Cards/ Unsure of this area-->
+    <div id="instructor-directory" class="mb-4"> 
+
+    </div>
+</div>
+
+    <!-- Full screen modal/For on click for ProfileCard -->
+<div class="modal-dialog modal-fullscreen-sm-down">
+  ...
+</div>
+
     <!--JavaScript Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -88,7 +90,7 @@
         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
         crossorigin="anonymous"></script>
 
-    <script src="script.js" type="text/babel" defer></script>
+    <script src="instructors_script.js" type="text/babel" defer></script>
 </body>
 
 </html>

@@ -24,20 +24,15 @@ const traineeCard = `
   <div class="traineeCard card" id="${record.id}" style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
     <div class="pc-back-image"></div>
     
-    <div class="pc-header">
-        <h2 class="pc-name">${f["fldO6doY1XxTCDMmR"] || 'Name'}</h2>
-        <p class="pc-title">${f["fldl9ieMG8OPVN6kc"] || 'Dream Job'}</p>
-    </div>
-
+    
+<button class="pc-contact-btn" onclick='openDetail(${JSON.stringify(f)})'>
     <div class="pc-glass-footer">
         <div class="pc-user-meta">
-            <div class="pc-text">
-                <p class="pc-handle">@${f["fldPqcWtWa9DghlIp"]}</p>
-                <p class="pc-status">${f["fldWlo5wuvNv5JOlG"]}</p>
-            </div>
+            <h2 class="pc-name">${f["fldO6doY1XxTCDMmR"] || 'Name'}</h2>
+        <p class="pc-title">${f["fldl9ieMG8OPVN6kc"] || 'Dream Job'}</p>
         </div>
-       <button class="pc-contact-btn" onclick='openDetail(${JSON.stringify(f)})'>See More</button>
     </div>
+    </button>
   </div>`;
     container.insertAdjacentHTML("beforeend", traineeCard);
 });
@@ -96,18 +91,17 @@ const baseId = "app3knV6H85zkGHHn";
 const tableId = "tbl9Be29w4DKiBivO";
 // Field IDs from the documentation
 const fields = {
-name: "fld06doY1XxTCDMmR",
-linkedin: "fldWlo5wuvNv5J0lG",
-github: "fldPqcWtwa9DghlIp",
-aboutMePage: "flaltulgqpuM8eUVZ",
-lyrics: "flde0EgDDoC6GfcLn",
+name: "fldO6doY1XxTCDMmR",
+linkedin: "fldWlo5wuvNv5JOlG",
+github: "fldPqcWtWa9DghlIp",
+aboutMePage: "fldLtulGqpuM8eUVZ",
+lyrics: "fldeOEgDDoC6GfcLn",
 hobbies: "fldyK3zVOFSug2hne",
 aboutBio: "fldeZyTeTE9u8DfGM",
-dreamJob: "fldl9ieMG80PVN6kc",
+dreamJob: "fldl9ieMG8OPVN6kc",
 favTech: "fldET8nxbx8pljtlm",
-photo2: "fldAXYRM90vSQ9oKj", // Photo 2 (Funny) for Detail View
+photo1: "fldtJw6nMs2ZhJRed",
 webApp: "fldzC67iMUT8MFw7h",
-iot: "flaZridyjhTryRcsG"
 };
 // Function to open and populate the Detail View
 function openDetail(data) {
@@ -119,7 +113,7 @@ document.getElementById('f-tech').innerText = data[fields.favTech] || "---";
 document.getElementById('f-hobbies').innerText = data[fields.hobbies] || "---";
 document.getElementById('f-about').innerText = data[fields.aboutBio] || "---";
 // Handling the Profile Picture (Funny Version)
-const funnyImg = data[fields.photo2] ? data[fields.photo2][0].url :
+const funnyImg = data[fields.photo1] ? data[fields.photo1][0].url :
 'https://via.placeholder.com/300x400';
 document.getElementById('modal-img').style.backgroundImage = `url('${funnyImg}')`;
 // Social Media Links
@@ -129,7 +123,6 @@ document.getElementById('link-github').href = data[fields.github] || "#";
 setupBtn('link-aboutme', 'img-aboutme', data[fields.aboutMePage]);
 setupBtn('link-lyrics', 'img-lyrics', data[fields.lyrics]);
 setupBtn('link-webapp', 'img-webapp', data[fields.webApp]);
-setupBtn('link-iot', 'img-iot', data[fields.iot]);
 // Show the modal
 document.getElementById('detail-view').style.display = 'block';
 }

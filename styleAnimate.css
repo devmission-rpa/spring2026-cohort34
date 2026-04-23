@@ -21,7 +21,7 @@
 .btn span {
   text-wrap: nowrap;
   background: #3a3a3a;
-  background-image: linear-gradient(#434343, #2a2a2a);
+  background-image: linear-gradient(#ffffff, #e6e6e6);
   padding: 1em 1.5em;
   border-radius: 0.5em;
   position: relative;
@@ -35,7 +35,7 @@
   content: "";
   position: absolute;
   inset: 0.5em 0.75em;
-  background-image: linear-gradient(#2e2e2e, #474747);
+  background-image: linear-gradient(#cdcaca, #ffffff);
   border-radius: 4em;
   z-index: -1;
 }
@@ -109,7 +109,7 @@
 .btn:hover::after,
 .btn:focus::after,
 .btn.active::after {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(157, 126, 200, 0.5);
   backdrop-filter: blur(30px);
   box-shadow: 
     inset 1px 0px 0px 0px rgba(0,0,0,0.1),
@@ -322,7 +322,7 @@
   bottom: 20px;
   left: 20px;
   right: 20px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(183, 213, 241, 0.2);;
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
@@ -332,32 +332,43 @@
 
 .pc-name { 
   font-family: "Ubuntu";
-  font-size: 1.8rem; 
+  font-size: 1.5rem; 
   margin: 0; 
   color: #1377FF; 
   text-shadow: 1px 1px .5px black;
 }
 .pc-title { 
   font-family: "Open Sans";
-  font-size: 1.1rem; 
+  font-size: 1rem; 
   opacity: 0.9; 
   font-weight: bold; 
   color: #2F1078; 
   margin: 5px 0 0 0; 
 }
-.pc-handle { font-weight: bold; margin: 0; }
-.pc-status { font-size: 0.85rem; opacity: 0.8; margin: 0; }
+
 
 .pc-contact-btn {
-  background: rgba(255, 255, 255, 0.2);
+  height: 25px;
+  width: 25px;
+  background: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 8px 16px;
+  color: #1377FF;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 4px 8px;
   border-radius: 12px;
   cursor: pointer;
   float: right;
 }
+#seeMore{
+    bottom: 20px;  
+    right: 20px;
+    font-size: .75rem;
 
+}
+.pc-glass-footer:hover {
+    background: oklch(56.952% 0.20239 309.811 / 0.274);
+}
 .traineeCard.card:hover .pc-back-image {
     opacity: 1;
 }
