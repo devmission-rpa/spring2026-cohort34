@@ -8,34 +8,36 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: { "Authorization": `Bearer patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a` },
         };
 
-  try {
-    const response = await fetch(`https://api.airtable.com/v0/app3knV6H85zkGHHn/Trainees?returnFieldsByFieldId=true`, options);
-    const data = await response.json();
+        try {
+            const response = await fetch(`https://api.airtable.com/v0/app3knV6H85zkGHHn/Trainees?returnFieldsByFieldId=true`, options);
+            const data = await response.json();
 
-    container.innerHTML = ""; // Clear loader
+            container.innerHTML = ""; // Clear loader
 
-    data.records.forEach(record => {
-      const f = record.fields;
+            data.records.forEach(record => {
+                const f = record.fields;
 
-    const frontImg = f["fldtJw6nMs2ZhJRed"]?.[0]?.url || '';
-    const backImg = f["fldAXYRM90vSQ9oKj"]?.[0]?.url || frontImg;
+                const frontImg = f["fldtJw6nMs2ZhJRed"]?.[0]?.url || '';
+                const backImg = f["fldAXYRM90vSQ9oKj"]?.[0]?.url || frontImg;
 
-const traineeCard = `
-  <div class="traineeCard card" id="${record.id}" style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
-    <div class="pc-back-image"></div>
-    
-    
-<button class="pc-contact-btn" onclick='openDetail(${JSON.stringify(f)})'>
-    <div class="pc-glass-footer">
-        <div class="pc-user-meta">
-            <h2 class="pc-name">${f["fldO6doY1XxTCDMmR"] || 'Name'}</h2>
-        <p class="pc-title">${f["fldl9ieMG8OPVN6kc"] || 'Dream Job'}</p>
-        </div>
-    </div>
-    </button>
-  </div>`;
-    container.insertAdjacentHTML("beforeend", traineeCard);
-});
+                // CRITICAL FIX: Escape single quotes in the data string to prevent HTML crashes
+                const safeData = JSON.stringify(f).replace(/'/g, "&apos;");
+
+                const traineeCard = `
+                <div class="traineeCard card" id="${record.id}" style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
+                    <div class="pc-back-image"></div>
+                    
+                    <button class="pc-contact-btn" onclick='openDetail(${safeData})' style="border:none; background:none; padding:0; width:100%; text-align:left; cursor:pointer;">
+                        <div class="pc-glass-footer">
+                            <div class="pc-user-meta">
+                                <h2 class="pc-name">${f["fldO6doY1XxTCDMmR"] || 'Name'}</h2>
+                                <p class="pc-title">${f["fldl9ieMG8OPVN6kc"] || 'Dream Job'}</p>
+                            </div>
+                        </div>
+                    </button>
+                </div>`;
+                container.insertAdjacentHTML("beforeend", traineeCard);
+            });
         } catch (err) {
             console.error("Fetch error:", err);
         }
@@ -78,62 +80,55 @@ const traineeCard = `
         card.style.setProperty("--opc", "0");
     });
 
-    // Run
     getAllRecords();
 });
 
-/* --- DETAIL VIEW LOGIC BY JOSELITO --- */
-/* This code connects my modal with Airtable data and handles the UI */
-// Airtable Configuration
-const apiToken =
-"patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a";
-const baseId = "app3knV6H85zkGHHn";
-const tableId = "tbl9Be29w4DKiBivO";
-// Field IDs from the documentation
+/* --- DETAIL VIEW LOGIC --- */
 const fields = {
-name: "fldO6doY1XxTCDMmR",
-linkedin: "fldWlo5wuvNv5JOlG",
-github: "fldPqcWtWa9DghlIp",
-aboutMePage: "fldLtulGqpuM8eUVZ",
-lyrics: "fldeOEgDDoC6GfcLn",
-hobbies: "fldyK3zVOFSug2hne",
-aboutBio: "fldeZyTeTE9u8DfGM",
-dreamJob: "fldl9ieMG8OPVN6kc",
-favTech: "fldET8nxbx8pljtlm",
-photo1: "fldtJw6nMs2ZhJRed",
-webApp: "fldzC67iMUT8MFw7h",
+    name: "fldO6doY1XxTCDMmR",
+    linkedin: "fldWlo5wuvNv5JOlG",
+    github: "fldPqcWtWa9DghlIp",
+    aboutMePage: "fldLtulGqpuM8eUVZ",
+    lyrics: "fldeOEgDDoC6GfcLn",
+    hobbies: "fldyK3zVOFSug2hne",
+    aboutBio: "fldeZyTeTE9u8DfGM",
+    dreamJob: "fldl9ieMG8OPVN6kc",
+    favTech: "fldET8nxbx8pljtlm",
+    photo1: "fldtJw6nMs2ZhJRed",
+    webApp: "fldzC67iMUT8MFw7h",
 };
-// Function to open and populate the Detail View
-function openDetail(data) {
-// Injecting name and job title
-document.getElementById('modal-name').innerText = data[fields.name] || "---";
-document.getElementById('modal-dream').innerText = data[fields.dreamJob] || "Dream Job";
-// Injecting tech skills and bio
-document.getElementById('f-tech').innerText = data[fields.favTech] || "---";
-document.getElementById('f-hobbies').innerText = data[fields.hobbies] || "---";
-document.getElementById('f-about').innerText = data[fields.aboutBio] || "---";
-// Handling the Profile Picture (Funny Version)
-const funnyImg = data[fields.photo1] ? data[fields.photo1][0].url :
-'https://via.placeholder.com/300x400';
-document.getElementById('modal-img').style.backgroundImage = `url('${funnyImg}')`;
-// Social Media Links
-document.getElementById('link-linkedin').href = data[fields.linkedin] || "#";
-document.getElementById('link-github').href = data[fields.github] || "#";
-// Project Buttons setup
-setupBtn('link-aboutme', 'img-aboutme', data[fields.aboutMePage]);
-setupBtn('link-lyrics', 'img-lyrics', data[fields.lyrics]);
-setupBtn('link-webapp', 'img-webapp', data[fields.webApp]);
-// Show the modal
-document.getElementById('detail-view').style.display = 'block';
-}
-// Function to add random preview images to project buttons
-function setupBtn(linkId, imgId, url) {
-const link = document.getElementById(linkId);
-link.href = url || "#";
-document.getElementById(imgId).style.backgroundImage = url ?
-`url('https://picsum.photos/200/100?random=${Math.random()}')` : 'none';
-}
-// Function to close the Detail View
-function closeDetail() {
-document.getElementById('detail-view').style.display = 'none';
-}
+
+// Functions are attached to 'window' to ensure the HTML onclick can access them
+window.openDetail = function(data) {
+    document.getElementById('modal-name').innerText = data[fields.name] || "---";
+    document.getElementById('modal-dream').innerText = data[fields.dreamJob] || "Dream Job";
+    
+    document.getElementById('f-tech').innerText = data[fields.favTech] || "---";
+    document.getElementById('f-hobbies').innerText = data[fields.hobbies] || "---";
+    document.getElementById('f-about').innerText = data[fields.aboutBio] || "---";
+
+    const funnyImg = data[fields.photo1] ? data[fields.photo1][0].url : 'https://via.placeholder.com/300x400';
+    document.getElementById('modal-img').style.backgroundImage = `url('${funnyImg}')`;
+
+    document.getElementById('link-linkedin').href = data[fields.linkedin] || "#";
+    document.getElementById('link-github').href = data[fields.github] || "#";
+
+    setupBtn('link-aboutme', 'img-aboutme', data[fields.aboutMePage]);
+    setupBtn('link-lyrics', 'img-lyrics', data[fields.lyrics]);
+    setupBtn('link-webapp', 'img-webapp', data[fields.webApp]);
+
+    document.getElementById('detail-view').style.display = 'block';
+};
+
+window.setupBtn = function(linkId, imgId, url) {
+    const link = document.getElementById(linkId);
+    if (link) link.href = url || "#";
+    const imgDiv = document.getElementById(imgId);
+    if (imgDiv) {
+        imgDiv.style.backgroundImage = url ? `url('https://picsum.photos/200/100?random=${Math.random()}')` : 'none';
+    }
+};
+
+window.closeDetail = function() {
+    document.getElementById('detail-view').style.display = 'none';
+};
