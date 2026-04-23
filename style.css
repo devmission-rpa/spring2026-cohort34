@@ -137,7 +137,7 @@ nav {
     background-image: url('backgrounds/home-background.png');
     background-size: cover;
     background-repeat: repeat-y;
-    animation: scroll-vertical 30s ease-in-out infinite alternate;
+    animation: scroll-vertical 15s linear infinite alternate;
 } 
 
 .scrolling-background-directory {
@@ -145,7 +145,31 @@ nav {
     background-image: url('backgrounds/directory-background.png');
     background-size: cover;
     background-repeat: repeat-y;
-    animation: scroll-vertical 30s ease-in-out infinite alternate;
+    animation: scroll-vertical 15s linear infinite alternate;
+}
+
+.scrolling-background-index {
+    height: 100vh;
+    background-image: url('backgrounds/index-background.png');
+    background-size: cover;
+    background-repeat: repeat-y;
+    animation: scroll-vertical 15s linear infinite alternate;
+}
+
+.scrolling-background-instructors {
+    height: 100vh;
+    background-image: url('backgrounds/instructors-background.png');
+    background-size: cover;
+    background-repeat: repeat-y;
+    animation: scroll-vertical 15s linear infinite alternate;
+}
+
+.scrolling-background-gallery {
+    height: 100vh;
+    background-image: url('backgrounds/gallery-background.png');
+    background-size: cover;
+    background-repeat: repeat-y;
+    animation: scroll-vertical 15s linear infinite alternate;
 }
 
 @keyframes scroll-vertical {
