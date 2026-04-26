@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const safeData = JSON.stringify(f).replace(/'/g, "&apos;");
 
                 const instructorCard = `
-                <div class="traineeCard card" id="${record.id}" style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
+                <div class="traineeCard card" id="${record.id}" onclick='openDetail(${safeData})' style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
                     <div class="pc-back-image"></div>
 
-                    <button class="pc-contact-btn" onclick='openDetail(${safeData})' style="border:none; background:none; padding:0; width:100%; text-align:left; cursor:pointer;">
+                    <button class="pc-contact-btn" style="border:none; background:none; padding:0; width:100%; text-align:left; cursor:pointer;">
                         <div class="pc-glass-footer">
                             <div class="pc-user-meta">
                                 <h2 class="pc-name">${f["Name"] || "Instructor"}</h2>
@@ -96,25 +96,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Airtable field names for Instructors table
 const instructorFields = {
-    name: "fldwm3RplPIcxK0Jb",
-    photo: "fldgmTgQ3yrdSSGXW",
-    description: "fldYQqjDdmpe4jK4K",
+    name: "Name",
+    photo: "Photo",
+    // add more goofy photos
+    goofyphoto: "Goofyphoto",
+    description: "Description",
     role: "Role",
-    linkedin: "LinkedIn",
+    linkedIn: "LinkedIn",
 };
 
 window.openDetail = function (data) {
     document.getElementById("modal-name").innerText = data[instructorFields.name] || "---";
-    document.getElementById("modal-role").innerText = data[instructorFields.role] || "Instructor";
+    document.getElementById("modal-role").innerText = data[instructorFields.role] || "---";
     document.getElementById("f-description").innerText = data[instructorFields.description] || "---";
-
+    
     const photoUrl = data[instructorFields.photo]
-        ? data[instructorFields.photo][0].url
+        ? data[instructorFields.goofyphoto][0].url
         : "https://via.placeholder.com/300x400";
     document.getElementById("modal-img").style.backgroundImage = `url('${photoUrl}')`;
 
     const linkedinLink = document.getElementById("link-linkedin");
-    if (linkedinLink) linkedinLink.href = data[instructorFields.linkedin] || "#";
+    if (linkedinLink) linkedinLink.href = data[instructorFields.linkedIn] || "---";
 
     document.getElementById("detail-view").style.display = "block";
 };
