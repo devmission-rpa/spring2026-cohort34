@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const safeData = JSON.stringify(f).replace(/'/g, "&apos;");
 
                 const traineeCard = `
-                <div class="traineeCard card" id="${record.id}" style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
+                <div class="traineeCard card" id="${record.id}" onclick='openDetail(${safeData})' style="--bg-front: url('${frontImg}'); --bg-back: url('${backImg}');">
                     <div class="pc-back-image"></div>
                     
-                    <button class="pc-contact-btn" onclick='openDetail(${safeData})' style="border:none; background:none; padding:0; width:100%; text-align:left; cursor:pointer;">
+                    <button class="pc-contact-btn"  style="border:none; background:none; padding:0; width:100%; text-align:left; cursor:pointer;">
                         <div class="pc-glass-footer">
                             <div class="pc-user-meta">
                                 <h2 class="pc-name">${f["fldO6doY1XxTCDMmR"] || 'Name'}</h2>
