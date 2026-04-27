@@ -124,3 +124,9 @@ window.openDetail = function (data) {
 window.closeDetail = function () {
     document.getElementById("detail-view").style.display = "none";
 };
+window.addEventListener("click", (e) => {
+    const modal = document.getElementById("detail-view");
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
