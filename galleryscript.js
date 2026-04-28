@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const apiToken = "patUNR9zih8lRzsj6.9746de26cc7d3ddf1ca83d7766c8a76ccc9b09c61954e51f26dcb18bb946ad4a";
     const baseId = "app3knV6H85zkGHHn";
     const tableName = "Gallery Photos"; 
-    const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`;
+    const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}?&view=Photos`;
 
     async function loadGallery() {
         try {
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="card h-100 shadow-sm border-0 gallery-card-hover">
                             <img src="${imgUrl}" class="card-img-top" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;" alt="${title}">
                             <div class="card-body p-2 text-center">
-                                <p class="card-text mb-0" style="font-weight: 500; font-size: 0.9rem;">${title}</p>
+                                <p class="card-text mb-0" style="font-weight: 500; font-size: 0.9rem; font-family: Open Sans">${title}</p>
                                 <small class="text-muted" style="font-size: 0.75rem;">${desc}</small>
                             </div>
                         </div>

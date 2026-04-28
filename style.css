@@ -17,7 +17,33 @@ nav {
 .nav-link {
     color: #85B8FF;
 }
-/* --- Background Animated --- */
+.indexHeading{
+    font-family: "Ubuntu";
+    color: #FFFF;
+    font-size: 92px;
+    font-weight: 500;
+}
+.indexSubHeading{
+    font-family: "Open Sans";
+    color: #FFFF;
+    font-size: 72px;
+    font-weight: 450;
+}
+.cohort34Icon{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+.indexIcon{
+    border-radius: 10px;
+    width: 150px;
+}
+
+/* --- Background Animated - Charlotte --- */
 .scrolling-background-home { 
     height: 100vh;
     background-image: url('backgrounds/home-background.png');
@@ -154,7 +180,7 @@ border: 3px solid rgba(0, 170, 255, 0.4);
     transform: scale(1.2); 
     filter: none; 
 }
-.subtitle { color: #00aaff; font-size: 1.2rem; margin: 5px 0 25px 0; font-weight: bold; }
+.subtitle { color: #00aaff; font-size: 1.2rem; margin: 5px 0 25px 0; font-weight: 800;  font-family: "Ubuntu";}
 .info-box {
 color: white !important;
 background: rgba(255, 255, 255, 0.05);
@@ -163,7 +189,7 @@ margin: 20px;
 border-radius: 12px;
 border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.info-box label { display: block; color: #00aaff; font-size: 0.7rem; font-weight: bold;
+.info-box label { display: block; color: #00aaff; font-size: 0.7rem; font-weight: 700; font-family: "Open Sans";
 margin-bottom: 5px; }
 .info-grid{
     padding-bottom: 20px;
@@ -183,9 +209,12 @@ margin-bottom: 5px; }
 
 .section-label{
      margin-bottom: 10px; 
+     font-family: "Ubuntu";
+     font-weight: 500;
 }
 
 .project-btn {
+    font-family: "Open Sans";
     flex: 1 1 200px;
     display: flex;
     flex-direction: column;
@@ -203,7 +232,7 @@ background: rgba(0, 170, 255, 0.1);
 border-color: #00aaff;
 }
 .btn-img { height: 50px; background-size: cover; background-position: center; opacity: 0.6; }
-.project-btn span { 
+.project-btn span { font-family: "Open Sans";
     display: inline-block; padding: 5px; font-size: 0.7rem; font-weight: bold;
 text-align: center; }
 
