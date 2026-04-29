@@ -15,7 +15,22 @@ nav {
 }
 
 .nav-link {
-  color: #85b8ff;
+  color: #00aaff;
+}
+.nav-link:hover{
+    color: #85b8ff;
+}
+.navbar-collapse{
+    border: #00aaff 2px;
+}
+.navbar-toggler{
+    background-color: #36197C;
+}
+.navbar-toggler-icon{
+    color: #85b8ff;
+}
+#directory-Color{
+    background: linear-gradient(to bottom, #ccdaf5, #85b8ff);
 }
 .indexHeading {
   font-family: "Ubuntu";
@@ -94,27 +109,34 @@ nav {
 }
 
 /* Ensures the cards sit side-by-side in a grid */
-#student-directory {
+#student-directory, #instructor-cards{
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 50px;
+  grid-template-columns: 1fr;
+  gap: 25px;
   justify-content: center;
   padding: 20px;
 }
-#instructor-directory {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
+@media (min-width: 768px) {
+  #student-directory {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
 }
-#instructor-cards {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 100px;
-  justify-content: center;
-  padding: 20px;
+
+@media (min-width: 1097px){
+    #student-directory, #instructor-cards{
+        grid-template-columns: repeat(3, 1fr);
+        padding: 20px;
+    }
 }
+
+@media (min-width: 1779px){
+    #student-directory, #instructor-cards{
+        grid-template-columns: repeat(5, 1fr);
+        padding: 20px;
+    }
+}
+
 
 /* --- DETAIL VIEW STYLES BY JOSELITO --- */
 /* Colors matched with Cohort #34 card aesthetics */

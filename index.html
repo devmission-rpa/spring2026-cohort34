@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="style.css">
   <title>Cohort #34 | Class Directory</title>
 </head>
+
 <audio id="myAudio">
   <source src="Click.mp3" type="audio/mpeg">
 </audio>
@@ -41,7 +42,7 @@
     <h1 class="indexHeading">&lt;Dev/Mission&gt;</h1>
     <h2 class="indexSubHeading">Cohort #34</h2>
     <div class="mt-4">
-      <a href="home.html" onclick="playAudio()"><button class="btn">
+      <a href="#" onclick="playAudio(event)"><button class="btn">
           <span>Enter</span>
         </button></a>
     </div>
@@ -50,8 +51,13 @@
   <script type="text/javascript">
     var indexSound = document.getElementById("myAudio");
 
-    function playAudio() {
+    function playAudio(event) {
+      event.preventDefault();
       indexSound.play();
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 10
+    );
     }
   </script>
 
