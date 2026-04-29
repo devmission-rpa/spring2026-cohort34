@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,15 @@
     <meta property="og:description" content="Dev/Mission Cohort #34 Class Directory Project">
     <meta property="og:site-name" content="Dev/Mission Cohort #34 | Class Directory">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="#">
-    <meta property="og:url" content="#">
+    <meta property="og:image" content="https://devmission-rpa.github.io/spring2026-cohort34/DM-34.png">
+    <meta property="og:url" content="https://devmission-rpa.github.io/spring2026-cohort34/">
 
     <!--Google Fonts Links Embeded-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
 
     <!--Bootstrap Links Embeded-->
     <link
@@ -27,12 +30,15 @@
     <title>Cohort #34 | Class Directory</title>
 
     <style class="hover"></style>
-<header>
+    <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html"><img src="DM-34.png" alt="Dev/Mission Logo 'DM' behind it there is a 34" width="35px" height="auto"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <a class="navbar-brand" href="index.html"><img src="DM-34.png"
+                        alt="Dev/Mission Logo 'DM' behind it there is a 34" width="35px" height="auto"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarTogglerDemo01">
                     <ul class="navbar-nav mb-2 mb-lg-0">
@@ -53,70 +59,76 @@
             </div>
         </nav>
     </header>
+
 <body>
-    
-<div class="container my-5">
-    <!--ID use for Profile Cards-->
-    <div id="student-directory" class="mb-4 cards"> 
 
+    <div class="container-fluid container">
+        <!--ID use for Profile Cards-->
+        <div id="student-directory">
+
+        </div>
     </div>
-</div>
 
-<div class="container my-5">
-    <!--ID use for Profile Cards/ Unsure of this area-->
-    <div id="instructor-directory" class="mb-4"> 
+    <div class="container my-5">
+        <!--ID use for Profile Cards/ Unsure of this area-->
+        <div id="instructor-directory" class="mb-4">
 
+        </div>
     </div>
-</div>
 
-<!-- Full screen modal/For on click for ProfileCard -->
-<div id="detail-view" class="modal">
-    <div class="modal-content">
-    <span class="close-x" onclick="closeDetail()">&times;</span>
-    <div class="modal-layout">
-        <div class="profile-col">
-        <div id="modal-img" class="main-photo"></div>
+    <!-- Full screen modal/For on click for ProfileCard -->
+    <div id="detail-view" class="modal">
+        <div class="modal-content">
+            <span class="close-x" onclick="closeDetail()">&times;</span>
+            <div class="modal-layout">
+                <div class="profile-col">
+                    <div id="modal-img" class="main-photo"></div>
+                </div>
+                <div class="info-col">
+                    <div class="nameIcons">
+                        <h1 id="modal-name">Name</h1>
+                        <div class="social-icons">
+                            <a id="link-linkedin" target="_blank" class="social-btn">
+                                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+                            </a>
+                            <a id="link-github" target="_blank" class="social-btn">
+                                <img src="https://icones.pro/wp-content/uploads/2021/06/icone-github-violet.png"
+                                    alt="GitHub">
+                            </a>
+                        </div>
+                    </div>
+                    <p id="modal-dream" class="subtitle">Dream Job</p>
+                    <div class="info-grid">
+                        <div class="info-box"><label>FAVORITE TECH</label><span id="f-tech">---</span></div>
+                        <div class="info-box"><label>HOBBIES</label><span id="f-hobbies">---</span></div>
+                        <div class="info-box" style="grid-column: span 2;"><label>ABOUT ME</label><span
+                                id="f-about">---</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="projects-section">
+                <label class="section-label">MY PROJECTS</label>
+                <div class="projects-container">
+
+                    <a id="link-aboutme" target="_blank" class="project-btn">
+                        <div class="btn-img" id="img-aboutme"></div>
+                        <span>About Me Page</span>
+                    </a>
+
+                    <a id="link-lyrics" target="_blank" class="project-btn">
+                        <div class="btn-img" id="img-lyrics"></div>
+                        <span>Lyrics Poem</span>
+                    </a>
+
+                    <a id="link-webapp" target="_blank" class="project-btn">
+                        <div class="btn-img" id="img-webapp"></div>
+                        <span>Web App</span>
+                    </a>
+
+                </div>
+            </div>
         </div>
-    <div class="info-col">
-        <div class="nameIcons">
-        <h1 id="modal-name">Name</h1>
-        <div class="social-icons">
-            <a id="link-linkedin" target="_blank" class="social-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
-            </a>
-        <a id="link-github" target="_blank" class="social-btn">
-        <img src="https://icones.pro/wp-content/uploads/2021/06/icone-github-violet.png" alt="GitHub">
-        </a>
-        </div>
-        </div>
-        <p id="modal-dream" class="subtitle">Dream Job</p>
-<div class="info-grid">
-    <div class="info-box"><label>FAVORITE TECH</label><span id="f-tech">---</span></div>
-    <div class="info-box"><label>HOBBIES</label><span id="f-hobbies">---</span></div>
-    <div class="info-box" style="grid-column: span 2;"><label>ABOUT ME</label><span id="f-about">---</span></div>
-</div>
-</div>
-</div>
-<div class="projects-section">
-<label class="section-label">MY PROJECTS</label>
-<div class="projects-container">
-
-<a id="link-aboutme" target="_blank" class="project-btn">
-<div class="btn-img" id="img-aboutme"></div>
-<span>About Me Page</span></a>
-
-<a id="link-lyrics" target="_blank" class="project-btn">
-<div class="btn-img" id="img-lyrics"></div>
-<span>Lyrics Poem</span></a>
-
-<a id="link-webapp" target="_blank" class="project-btn">
-<div class="btn-img" id="img-webapp"></div>
-<span>Web App</span></a>
-
-</div>
-</div>
-</div>
-</div>
+    </div>
 
     <!--JavaScript Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -126,7 +138,7 @@
         integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
         crossorigin="anonymous"></script>
 
-    <script src="script.js" ></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
