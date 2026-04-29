@@ -52,12 +52,16 @@
     var indexSound = document.getElementById("myAudio");
 
     function playAudio(event) {
-      event.preventDefault();
-      indexSound.play();
+      event.preventDefault(); 
+      
+      
+      indexSound.play().catch(function(error) {
+        console.log("Audio playback failed:", error);
+      });
+
       setTimeout(() => {
         window.location.href = "home.html";
-      }, 10
-    );
+      }, 300);
     }
   </script>
 

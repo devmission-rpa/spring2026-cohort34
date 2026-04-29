@@ -135,9 +135,7 @@ window.setupBtn = function (linkId, imgId, url) {
   if (link) link.href = url || "#";
   const imgDiv = document.getElementById(imgId);
   if (imgDiv) {
-    imgDiv.style.backgroundImage = url
-      ? `url('https://picsum.photos/200/100?random=${Math.random()}')`
-      : "none";
+    imgDiv.style.backgroundImage = "none"; 
   }
 };
 
