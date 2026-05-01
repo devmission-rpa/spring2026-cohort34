@@ -45,29 +45,6 @@
   <source src="gallery-bgm.mp3" type="audio/mpeg">
 </audio>
 
-<script>
-function playAudio(event) {
-  event.preventDefault(); 
-  
-  var indexSound = document.getElementById("myAudio");
-  var bgMusic = document.getElementById("galleryMusic");
-
-  // 1. Play the click sound effect
-  indexSound.play();
-
-  // 2. Start the background music at 20% volume
-  if (bgMusic) {
-    bgMusic.volume = 0.2;
-    bgMusic.play().catch(err => console.log("Music play blocked by browser"));
-  }
-
-  // 3. Move to home.html after the click sound starts
-  setTimeout(() => {
-    window.location.href = "home.html";
-  }, 400); 
-}
-</script>
-
   <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
 
   <div
