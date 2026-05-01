@@ -100,4 +100,26 @@
     <script src="script.js" type="text/babel" defer></script>
 </body>
 
+<!-- Lightbox Overlay -->
+<div id="gallery-lightbox" class="lightbox-modal">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" src="">
+    <div id="lightbox-caption"></div>
+    
+    <!-- Navigation Arrows -->
+    <a class="lightbox-prev" onclick="changeImage(-1)">&#10094;</a>
+    <a class="lightbox-next" onclick="changeImage(1)">&#10095;</a>
+</div>
+
+<audio id="galleryMusic" loop>
+  <source src="gallery-bgm.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Mute Toggle UI -->
+<div class="music-controls">
+  <button id="muteBtn" onclick="toggleMute()">
+    <span id="muteIcon">🔊</span>
+  </button>
+</div>
+
 </html>
